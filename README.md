@@ -1,6 +1,9 @@
-<div align="center">
+﻿<div align="center">
   <a href="https://renovoq.me">
-    <img src="./profile-card.svg" alt="Muhammad Hamza Tahir (Dillulu) — ASCII Portrait & Neofetch Profile" width="100%" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./dark_mode.svg">
+      <img alt="Muhammad Hamza Tahir (Dillulu) — ASCII Portrait & Neofetch Profile" src="./light_mode.svg" width="100%">
+    </picture>
   </a>
 
   <br/>
