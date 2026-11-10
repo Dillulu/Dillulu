@@ -1,12 +1,12 @@
+import calendar
 import datetime
 import os
 import re
 import requests
-from dateutil import relativedelta
 
 USER_NAME = os.environ.get('USER_NAME', 'Dillulu')
 TOKEN = os.environ.get('ACCESS_TOKEN') or os.environ.get('GITHUB_TOKEN') or ''
-BIRTHDAY = datetime.datetime(2003, 1, 24)
+BIRTHDAY = datetime.date(2003, 1, 24)
 
 
 def format_plural(unit):
@@ -14,12 +14,23 @@ def format_plural(unit):
 
 
 def daily_readme(birthday):
-    diff = relativedelta.relativedelta(datetime.datetime.today(), birthday)
+    today = datetime.date.today()
+    years = today.year - birthday.year
+    months = today.month - birthday.month
+    days = today.day - birthday.day
+    if days < 0:
+        months -= 1
+        prev_month = 12 if today.month == 1 else today.month - 1
+        prev_year = today.year - 1 if today.month == 1 else today.year
+        days += calendar.monthrange(prev_year, prev_month)[1]
+    if months < 0:
+        years -= 1
+        months += 12
     return '{} {}, {} {}, {} {}{}'.format(
-        diff.years, 'year' + format_plural(diff.years),
-        diff.months, 'month' + format_plural(diff.months),
-        diff.days, 'day' + format_plural(diff.days),
-        ' 🎂' if (diff.months == 0 and diff.days == 0) else ''
+        years, 'year' + format_plural(years),
+        months, 'month' + format_plural(months),
+        days, 'day' + format_plural(days),
+        ' 🎂' if (months == 0 and days == 0) else ''
     )
 
 
